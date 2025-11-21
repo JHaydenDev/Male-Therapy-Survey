@@ -89,14 +89,14 @@ export async function GET() {
     
     // Shame frequency average
     const responsesWithShameFrequency = responses.filter(r => r.shameFrequency !== undefined);
-    const totalShameFrequency = responsesWithShameFrequency.reduce((sum, r) => sum + (r.shameFrequency || 0), 0);
+    const totalShameFrequency = responsesWithShameFrequency.reduce((sum, r) => sum + r.shameFrequency!, 0);
     const averageShameFrequency = responsesWithShameFrequency.length > 0 
       ? totalShameFrequency / responsesWithShameFrequency.length 
       : 0;
     
     // Shame intensity average
     const responsesWithShameIntensity = responses.filter(r => r.shameIntensity !== undefined);
-    const totalShameIntensity = responsesWithShameIntensity.reduce((sum, r) => sum + (r.shameIntensity || 0), 0);
+    const totalShameIntensity = responsesWithShameIntensity.reduce((sum, r) => sum + r.shameIntensity!, 0);
     const averageShameIntensity = responsesWithShameIntensity.length > 0 
       ? totalShameIntensity / responsesWithShameIntensity.length 
       : 0;

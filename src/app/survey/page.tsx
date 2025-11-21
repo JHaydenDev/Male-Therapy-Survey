@@ -23,8 +23,8 @@ export default function SurveyPage() {
     preferredFormat: '',
     additionalComments: '',
     // Shame-related fields
-    shameFrequency: 4,
-    shameIntensity: 4,
+    shameFrequency: undefined as number | undefined,
+    shameIntensity: undefined as number | undefined,
     shameSources: [] as string[],
     shameEmotions: [] as string[],
     shameExperience: '',
@@ -62,8 +62,8 @@ export default function SurveyPage() {
           preferredFormat: formData.preferredFormat || undefined,
           additionalComments: formData.additionalComments || undefined,
           // Shame-related fields
-          shameFrequency: formData.shameFrequency,
-          shameIntensity: formData.shameIntensity,
+          shameFrequency: formData.shameFrequency !== undefined ? formData.shameFrequency : undefined,
+          shameIntensity: formData.shameIntensity !== undefined ? formData.shameIntensity : undefined,
           shameSources: formData.shameSources.length > 0 ? formData.shameSources : undefined,
           shameEmotions: formData.shameEmotions.length > 0 ? formData.shameEmotions : undefined,
           shameExperience: formData.shameExperience || undefined,
@@ -308,12 +308,12 @@ export default function SurveyPage() {
                     type="range"
                     min="1"
                     max="7"
-                    value={formData.shameFrequency}
+                    value={formData.shameFrequency ?? 4}
                     onChange={(e) => setFormData({ ...formData, shameFrequency: parseInt(e.target.value) })}
                     className="flex-1"
                   />
                   <span>7 (Very frequently)</span>
-                  <span className="font-bold text-blue-600">{formData.shameFrequency}</span>
+                  <span className="font-bold text-blue-600">{formData.shameFrequency ?? 4}</span>
                 </div>
               </div>
 
@@ -328,12 +328,12 @@ export default function SurveyPage() {
                     type="range"
                     min="1"
                     max="7"
-                    value={formData.shameIntensity}
+                    value={formData.shameIntensity ?? 4}
                     onChange={(e) => setFormData({ ...formData, shameIntensity: parseInt(e.target.value) })}
                     className="flex-1"
                   />
                   <span>7 (Very intense)</span>
-                  <span className="font-bold text-blue-600">{formData.shameIntensity}</span>
+                  <span className="font-bold text-blue-600">{formData.shameIntensity ?? 4}</span>
                 </div>
               </div>
 
