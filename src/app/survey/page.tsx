@@ -3,6 +3,9 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
+const THERAPY_YES = 'yes';
+const THERAPY_NO = 'no';
+
 export default function SurveyPage() {
   const router = useRouter();
   const [submitting, setSubmitting] = useState(false);
@@ -43,12 +46,12 @@ export default function SurveyPage() {
         },
         body: JSON.stringify({
           age: formData.age,
-          hasAttendedTherapy: formData.hasAttendedTherapy === 'yes',
-          reasonsForTherapy: formData.hasAttendedTherapy === 'yes' ? formData.reasonsForTherapy : undefined,
-          reasonsAgainstTherapy: formData.hasAttendedTherapy === 'no' ? formData.reasonsAgainstTherapy : undefined,
-          willingnessToRecommend: formData.hasAttendedTherapy === 'yes' ? formData.willingnessToRecommend : undefined,
+          hasAttendedTherapy: formData.hasAttendedTherapy === THERAPY_YES,
+          reasonsForTherapy: formData.hasAttendedTherapy === THERAPY_YES ? formData.reasonsForTherapy : undefined,
+          reasonsAgainstTherapy: formData.hasAttendedTherapy === THERAPY_NO ? formData.reasonsAgainstTherapy : undefined,
+          willingnessToRecommend: formData.hasAttendedTherapy === THERAPY_YES ? formData.willingnessToRecommend : undefined,
           perceivedStigma: formData.perceivedStigma,
-          mostHelpfulAspect: formData.hasAttendedTherapy === 'yes' ? formData.mostHelpfulAspect : undefined,
+          mostHelpfulAspect: formData.hasAttendedTherapy === THERAPY_YES ? formData.mostHelpfulAspect : undefined,
           barriers: formData.barriers.length > 0 ? formData.barriers : undefined,
           preferredFormat: formData.preferredFormat || undefined,
           additionalComments: formData.additionalComments || undefined,
@@ -114,7 +117,7 @@ export default function SurveyPage() {
                     type="radio"
                     name="hasAttendedTherapy"
                     value="yes"
-                    checked={formData.hasAttendedTherapy === 'yes'}
+                    checked={formData.hasAttendedTherapy === THERAPY_YES}
                     onChange={(e) => setFormData({ ...formData, hasAttendedTherapy: e.target.value })}
                     className="mr-2"
                   />
@@ -126,7 +129,7 @@ export default function SurveyPage() {
                     type="radio"
                     name="hasAttendedTherapy"
                     value="no"
-                    checked={formData.hasAttendedTherapy === 'no'}
+                    checked={formData.hasAttendedTherapy === THERAPY_NO}
                     onChange={(e) => setFormData({ ...formData, hasAttendedTherapy: e.target.value })}
                     className="mr-2"
                   />
@@ -136,7 +139,7 @@ export default function SurveyPage() {
             </div>
 
             {/* Conditional questions for those who attended therapy */}
-            {formData.hasAttendedTherapy === 'yes' && (
+            {formData.hasAttendedTherapy === THERAPY_YES && (
               <>
                 <div>
                   <label className="block text-lg font-semibold text-gray-900 mb-3">
@@ -192,7 +195,7 @@ export default function SurveyPage() {
             )}
 
             {/* Conditional questions for those who haven't attended therapy */}
-            {formData.hasAttendedTherapy === 'no' && (
+            {formData.hasAttendedTherapy === THERAPY_NO && (
               <div>
                 <label className="block text-lg font-semibold text-gray-900 mb-3">
                   3. What are your main reasons for not seeking therapy? (Select all that apply)
@@ -216,7 +219,7 @@ export default function SurveyPage() {
             {/* Perceived Stigma */}
             <div>
               <label className="block text-lg font-semibold text-gray-900 mb-3">
-                {formData.hasAttendedTherapy === 'yes' ? '6' : '4'}. On a scale of 1-10, how much stigma do you feel exists around men seeking therapy? <span className="text-red-500">*</span>
+                {formData.hasAttendedTherapy === THERAPY_YES ? '6' : '4'}. On a scale of 1-10, how much stigma do you feel exists around men seeking therapy? <span className="text-red-500">*</span>
               </label>
               <div className="flex items-center gap-4">
                 <span>1 (No stigma)</span>
@@ -236,7 +239,7 @@ export default function SurveyPage() {
             {/* Barriers */}
             <div>
               <label className="block text-lg font-semibold text-gray-900 mb-3">
-                {formData.hasAttendedTherapy === 'yes' ? '7' : '5'}. What barriers prevent men from seeking mental health support? (Select all that apply)
+                {formData.hasAttendedTherapy === THERAPY_YES ? '7' : '5'}. What barriers prevent men from seeking mental health support? (Select all that apply)
               </label>
               <div className="space-y-2">
                 {['Financial', 'Cultural/social expectations', 'Fear of judgment', 'Lack of awareness', 'Limited accessibility', 'Distrust of healthcare system'].map(barrier => (
@@ -256,7 +259,7 @@ export default function SurveyPage() {
             {/* Preferred Format */}
             <div>
               <label className="block text-lg font-semibold text-gray-900 mb-3">
-                {formData.hasAttendedTherapy === 'yes' ? '8' : '6'}. What format of therapy would you prefer or find most accessible?
+                {formData.hasAttendedTherapy === THERAPY_YES ? '8' : '6'}. What format of therapy would you prefer or find most accessible?
               </label>
               <select
                 value={formData.preferredFormat}
@@ -276,7 +279,7 @@ export default function SurveyPage() {
             {/* Additional Comments */}
             <div>
               <label className="block text-lg font-semibold text-gray-900 mb-3">
-                {formData.hasAttendedTherapy === 'yes' ? '9' : '7'}. Any additional thoughts or experiences you&apos;d like to share?
+                {formData.hasAttendedTherapy === THERAPY_YES ? '9' : '7'}. Any additional thoughts or experiences you&apos;d like to share?
               </label>
               <textarea
                 value={formData.additionalComments}
