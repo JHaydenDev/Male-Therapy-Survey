@@ -10,13 +10,6 @@
   --dark-accent: #0f0529;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-primary: var(--primary-purple);
-  --color-secondary: var(--secondary-purple);
-}
-
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #1a0f2e;
