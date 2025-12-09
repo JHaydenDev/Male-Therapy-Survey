@@ -9,7 +9,12 @@ declare global {
 
 function getMongoClient(): Promise<MongoClient> {
   if (!process.env.MONGODB_URI) {
-    throw new Error('Please add your MongoDB URI to .env.local');
+    // In build time or when no URI is set, return a placeholder
+    // This prevents hard failures during Vercel builds
+    if (process.env.NODE_ENV === 'production' && !process.env.MONGODB_URI) {
+      console.warn('MONGODB_URI not set - database features will be unavailable');
+    }
+    throw new Error('Please add your MongoDB URI to environment variables');
   }
 
   const uri: string = process.env.MONGODB_URI;
