@@ -223,7 +223,7 @@ export default function QuizPage() {
       <div className="min-h-screen py-6 sm:py-12" style={{ background: 'linear-gradient(to bottom, #2a1a3f, #1a0f2e)' }}>
         <div className="container mx-auto px-4 max-w-3xl">
           {/* Results */}
-          <div className="mb-8" style={{ backgroundColor: colors.bg, border: `2px solid ${colors.border}` }} className="p-6 sm:p-8 rounded-lg">
+          <div className="mb-8 p-6 sm:p-8 rounded-lg" style={{ backgroundColor: colors.bg, border: `2px solid ${colors.border}` }}>
             <div className="flex items-center gap-3 mb-4">
               <span className="text-4xl">
                 {result.level === 'low' ? '✅' : result.level === 'moderate' ? '⚠️' : '🆘'}
