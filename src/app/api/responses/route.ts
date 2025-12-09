@@ -31,6 +31,35 @@ export async function POST(request: NextRequest) {
       );
     }
     
+    // Validate shame fields if provided
+    if (body.shameFrequency !== undefined && (typeof body.shameFrequency !== 'number' || body.shameFrequency < 1 || body.shameFrequency > 7)) {
+      return NextResponse.json(
+        { success: false, error: 'Shame frequency must be a number between 1 and 7' },
+        { status: 400 }
+      );
+    }
+    
+    if (body.shameIntensity !== undefined && (typeof body.shameIntensity !== 'number' || body.shameIntensity < 1 || body.shameIntensity > 7)) {
+      return NextResponse.json(
+        { success: false, error: 'Shame intensity must be a number between 1 and 7' },
+        { status: 400 }
+      );
+    }
+    
+    if (body.shameSources !== undefined && !Array.isArray(body.shameSources)) {
+      return NextResponse.json(
+        { success: false, error: 'Shame sources must be an array' },
+        { status: 400 }
+      );
+    }
+    
+    if (body.shameEmotions !== undefined && !Array.isArray(body.shameEmotions)) {
+      return NextResponse.json(
+        { success: false, error: 'Shame emotions must be an array' },
+        { status: 400 }
+      );
+    }
+    
     const result = await createSurveyResponse(body);
     
     return NextResponse.json(

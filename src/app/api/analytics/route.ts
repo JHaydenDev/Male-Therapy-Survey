@@ -21,6 +21,10 @@ export async function GET() {
           therapyModalities: [],
           topBarriers: [],
           preferredFormats: [],
+          averageShameFrequency: 0,
+          averageShameIntensity: 0,
+          topShameSources: [],
+          topShameEmotions: [],
         } 
       });
     }
@@ -97,6 +101,46 @@ export async function GET() {
       .map(([format, count]) => ({ format, count }))
       .sort((a, b) => b.count - a.count);
     
+    // Shame frequency average
+    const responsesWithShameFrequency = responses.filter(r => r.shameFrequency !== undefined);
+    const totalShameFrequency = responsesWithShameFrequency.reduce((sum, r) => sum + r.shameFrequency!, 0);
+    const averageShameFrequency = responsesWithShameFrequency.length > 0 
+      ? totalShameFrequency / responsesWithShameFrequency.length 
+      : 0;
+    
+    // Shame intensity average
+    const responsesWithShameIntensity = responses.filter(r => r.shameIntensity !== undefined);
+    const totalShameIntensity = responsesWithShameIntensity.reduce((sum, r) => sum + r.shameIntensity!, 0);
+    const averageShameIntensity = responsesWithShameIntensity.length > 0 
+      ? totalShameIntensity / responsesWithShameIntensity.length 
+      : 0;
+    
+    // Top shame sources
+    const shameSourcesCount: { [key: string]: number } = {};
+    responses.forEach(r => {
+      if (r.shameSources) {
+        r.shameSources.forEach(source => {
+          shameSourcesCount[source] = (shameSourcesCount[source] || 0) + 1;
+        });
+      }
+    });
+    const topShameSources = Object.entries(shameSourcesCount)
+      .map(([source, count]) => ({ source, count }))
+      .sort((a, b) => b.count - a.count);
+    
+    // Top shame emotions
+    const shameEmotionsCount: { [key: string]: number } = {};
+    responses.forEach(r => {
+      if (r.shameEmotions) {
+        r.shameEmotions.forEach(emotion => {
+          shameEmotionsCount[emotion] = (shameEmotionsCount[emotion] || 0) + 1;
+        });
+      }
+    });
+    const topShameEmotions = Object.entries(shameEmotionsCount)
+      .map(([emotion, count]) => ({ emotion, count }))
+      .sort((a, b) => b.count - a.count);
+    
     const analytics: SurveyAnalytics = {
       totalResponses,
       therapyAttendanceRate: Math.round(therapyAttendanceRate * 100) / 100,
@@ -107,6 +151,10 @@ export async function GET() {
       therapyModalities,
       topBarriers,
       preferredFormats,
+      averageShameFrequency: Math.round(averageShameFrequency * 100) / 100,
+      averageShameIntensity: Math.round(averageShameIntensity * 100) / 100,
+      topShameSources,
+      topShameEmotions,
     };
     
     return NextResponse.json({ success: true, data: analytics });

@@ -23,9 +23,15 @@ export default function SurveyPage() {
     barriers: [] as string[],
     preferredFormat: '',
     additionalComments: '',
+    // Shame-related fields
+    shameFrequency: undefined as number | undefined,
+    shameIntensity: undefined as number | undefined,
+    shameSources: [] as string[],
+    shameEmotions: [] as string[],
+    shameExperience: '',
   });
 
-  const handleCheckboxChange = (field: 'reasonsForTherapy' | 'reasonsAgainstTherapy' | 'barriers' | 'therapistModalities', value: string) => {
+  const handleCheckboxChange = (field: 'reasonsForTherapy' | 'reasonsAgainstTherapy' | 'barriers' | 'therapistModalities' | 'shameSources' | 'shameEmotions', value: string) => {
     setFormData(prev => ({
       ...prev,
       [field]: prev[field].includes(value)
@@ -57,6 +63,12 @@ export default function SurveyPage() {
           barriers: formData.barriers.length > 0 ? formData.barriers : undefined,
           preferredFormat: formData.preferredFormat || undefined,
           additionalComments: formData.additionalComments || undefined,
+          // Shame-related fields
+          shameFrequency: formData.shameFrequency !== undefined ? formData.shameFrequency : undefined,
+          shameIntensity: formData.shameIntensity !== undefined ? formData.shameIntensity : undefined,
+          shameSources: formData.shameSources.length > 0 ? formData.shameSources : undefined,
+          shameEmotions: formData.shameEmotions.length > 0 ? formData.shameEmotions : undefined,
+          shameExperience: formData.shameExperience || undefined,
         }),
       });
 
@@ -299,10 +311,120 @@ export default function SurveyPage() {
                 <option value="No preference">No preference</option>
               </select>
             </div>
+
+            {/* Shame Section */}
+            <div className="p-6 rounded-lg space-y-6" style={{backgroundColor: 'rgba(130, 77, 191, 0.1)', borderLeft: '4px solid #824dbf'}}>
+              <h2 className="text-xl font-bold mb-4" style={{color: '#f0e6ff'}}>
+                Understanding Shame and Mental Health
+              </h2>
+              <p className="mb-4" style={{color: '#c9b5e6'}}>
+                The following questions explore the role of shame in men&apos;s mental health experiences.
+              </p>
+
+              {/* Shame Frequency */}
+              <div>
+                <label className="block text-lg font-semibold mb-3" style={{color: '#f0e6ff'}}>
+                  {formData.hasAttendedTherapy === THERAPY_YES ? '10' : '7'}. How frequently do you experience feelings of shame related to your mental health or emotional struggles?
+                </label>
+                <div className="flex items-center gap-4">
+                  <span style={{color: '#c9b5e6'}}>1 (Never)</span>
+                  <input
+                    type="range"
+                    min="1"
+                    max="7"
+                    value={formData.shameFrequency ?? 4}
+                    onChange={(e) => setFormData({ ...formData, shameFrequency: parseInt(e.target.value) })}
+                    className="flex-1"
+                    style={{accentColor: '#824dbf'}}
+                  />
+                  <span style={{color: '#c9b5e6'}}>7 (Very frequently)</span>
+                  <span className="font-bold" style={{color: '#824dbf'}}>{formData.shameFrequency ?? 4}</span>
+                </div>
+              </div>
+
+              {/* Shame Intensity */}
+              <div>
+                <label className="block text-lg font-semibold mb-3" style={{color: '#f0e6ff'}}>
+                  {formData.hasAttendedTherapy === THERAPY_YES ? '11' : '8'}. When you experience shame, how intense are those feelings?
+                </label>
+                <div className="flex items-center gap-4">
+                  <span style={{color: '#c9b5e6'}}>1 (Mild)</span>
+                  <input
+                    type="range"
+                    min="1"
+                    max="7"
+                    value={formData.shameIntensity ?? 4}
+                    onChange={(e) => setFormData({ ...formData, shameIntensity: parseInt(e.target.value) })}
+                    className="flex-1"
+                    style={{accentColor: '#824dbf'}}
+                  />
+                  <span style={{color: '#c9b5e6'}}>7 (Very intense)</span>
+                  <span className="font-bold" style={{color: '#824dbf'}}>{formData.shameIntensity ?? 4}</span>
+                </div>
+              </div>
+
+              {/* Shame Sources */}
+              <div>
+                <label className="block text-lg font-semibold mb-3" style={{color: '#f0e6ff'}}>
+                  {formData.hasAttendedTherapy === THERAPY_YES ? '12' : '9'}. What are the common sources of shame you experience? (Select all that apply)
+                </label>
+                <div className="space-y-2">
+                  {['Parents', 'Peers', 'Romantic partners', 'Workplace', 'Self', 'Other'].map(source => (
+                    <label key={source} className="flex items-center">
+                      <input
+                        type="checkbox"
+                        checked={formData.shameSources.includes(source)}
+                        onChange={() => handleCheckboxChange('shameSources', source)}
+                        className="mr-2"
+                        style={{accentColor: '#824dbf'}}
+                      />
+                      <span style={{color: '#c9b5e6'}}>{source}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              {/* Shame Emotions */}
+              <div>
+                <label className="block text-lg font-semibold mb-3" style={{color: '#f0e6ff'}}>
+                  {formData.hasAttendedTherapy === THERAPY_YES ? '13' : '10'}. Which emotions do you associate with your feelings of shame? (Select all that apply)
+                </label>
+                <div className="space-y-2">
+                  {['Guilt', 'Anger', 'Sadness', 'Fear', 'Embarrassment'].map(emotion => (
+                    <label key={emotion} className="flex items-center">
+                      <input
+                        type="checkbox"
+                        checked={formData.shameEmotions.includes(emotion)}
+                        onChange={() => handleCheckboxChange('shameEmotions', emotion)}
+                        className="mr-2"
+                        style={{accentColor: '#824dbf'}}
+                      />
+                      <span style={{color: '#c9b5e6'}}>{emotion}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              {/* Shame Experience */}
+              <div>
+                <label className="block text-lg font-semibold mb-3" style={{color: '#f0e6ff'}}>
+                  {formData.hasAttendedTherapy === THERAPY_YES ? '14' : '11'}. Describe an experience when you felt ashamed and how it affected your willingness to seek help.
+                </label>
+                <textarea
+                  value={formData.shameExperience}
+                  onChange={(e) => setFormData({ ...formData, shameExperience: e.target.value })}
+                  className="w-full p-3 rounded-lg focus:ring-2 focus:border-transparent"
+                  style={{borderColor: '#824dbf', backgroundColor: '#1a0f2e', color: '#f0e6ff'}}
+                  rows={4}
+                  placeholder="Share your experience if you feel comfortable..."
+                />
+              </div>
+            </div>
+
             {/* Additional Comments */}
             <div>
               <label className="block text-lg font-semibold mb-3" style={{color: '#f0e6ff'}}>
-                {formData.hasAttendedTherapy === THERAPY_YES ? '10' : '7'}. Any additional thoughts or experiences you'd like to share?
+                {formData.hasAttendedTherapy === THERAPY_YES ? '15' : '12'}. Any additional thoughts or experiences you'd like to share?
               </label>
               <textarea
                 value={formData.additionalComments}

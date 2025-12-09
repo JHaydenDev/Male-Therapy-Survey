@@ -11,6 +11,12 @@ export interface SurveyResponse {
   barriers?: string[];
   preferredFormat?: string;
   additionalComments?: string;
+  // Shame-related fields
+  shameFrequency?: number;
+  shameIntensity?: number;
+  shameSources?: string[];
+  shameEmotions?: string[];
+  shameExperience?: string;
   createdAt: Date;
 }
 
@@ -24,4 +30,9 @@ export interface SurveyAnalytics {
   therapyModalities: { modality: string; count: number }[];
   topBarriers: { barrier: string; count: number }[];
   preferredFormats: { format: string; count: number }[];
+  // Shame-related analytics
+  averageShameFrequency: number;
+  averageShameIntensity: number;
+  topShameSources: { source: string; count: number }[];
+  topShameEmotions: { emotion: string; count: number }[];
 }
