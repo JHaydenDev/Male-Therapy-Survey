@@ -18,6 +18,7 @@ export async function GET() {
           averageWillingnessToRecommend: 0,
           ageDistribution: {},
           topReasonsForTherapy: [],
+          therapyModalities: [],
           topBarriers: [],
           preferredFormats: [],
         } 
@@ -58,6 +59,19 @@ export async function GET() {
       .sort((a, b) => b.count - a.count)
       .slice(0, 5);
     
+    // Therapy modalities
+    const modalitiesCount: { [key: string]: number } = {};
+    responses.forEach(r => {
+      if (r.therapistModalities) {
+        r.therapistModalities.forEach(modality => {
+          modalitiesCount[modality] = (modalitiesCount[modality] || 0) + 1;
+        });
+      }
+    });
+    const therapyModalities = Object.entries(modalitiesCount)
+      .map(([modality, count]) => ({ modality, count }))
+      .sort((a, b) => b.count - a.count);
+    
     // Top barriers
     const barriersCount: { [key: string]: number } = {};
     responses.forEach(r => {
@@ -90,6 +104,7 @@ export async function GET() {
       averageWillingnessToRecommend: Math.round(averageWillingnessToRecommend * 100) / 100,
       ageDistribution,
       topReasonsForTherapy,
+      therapyModalities,
       topBarriers,
       preferredFormats,
     };

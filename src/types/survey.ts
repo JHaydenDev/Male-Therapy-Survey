@@ -3,6 +3,7 @@ export interface SurveyResponse {
   age: string;
   hasAttendedTherapy: boolean;
   reasonsForTherapy?: string[];
+  therapistModalities?: string[];
   reasonsAgainstTherapy?: string[];
   willingnessToRecommend?: number;
   perceivedStigma: number;
@@ -20,6 +21,7 @@ export interface SurveyAnalytics {
   averageWillingnessToRecommend: number;
   ageDistribution: { [key: string]: number };
   topReasonsForTherapy: { reason: string; count: number }[];
+  therapyModalities: { modality: string; count: number }[];
   topBarriers: { barrier: string; count: number }[];
   preferredFormats: { format: string; count: number }[];
 }

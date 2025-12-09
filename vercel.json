@@ -5,5 +5,11 @@
   "framework": "nextjs",
   "env": {
     "MONGODB_URI": "@mongodb-uri"
-  }
+  },
+  "crons": [
+    {
+      "path": "/api/research/ingest",
+      "schedule": "0 3 * * 0" // weekly at 03:00 UTC Sunday
+    }
+  ]
 }
