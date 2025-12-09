@@ -6,12 +6,17 @@ export default function Home() {
       <main className="container mx-auto px-4 py-16">
         {/* Hero Section */}
         <div className="text-center max-w-4xl mx-auto mb-12 sm:mb-16">
+          <div className="mb-4">
+            <span className="text-5xl sm:text-6xl">🧠</span>
+          </div>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 px-4" style={{color: '#f0e6ff'}}>
-            Men&apos;s Mental Health Matters
+            Your Mental Health Matters
           </h1>
+          <p className="text-base sm:text-lg md:text-xl mb-3 sm:mb-4 px-4" style={{color: '#c9b5e6'}}>
+            <strong>MentalWell</strong> is a comprehensive platform for men's mental health education and support.
+          </p>
           <p className="text-base sm:text-lg md:text-xl mb-6 sm:mb-8 px-4" style={{color: '#c9b5e6'}}>
-            Share your experiences with therapy anonymously and help us understand 
-            the barriers and benefits of mental health care for men.
+            Share your therapy experiences anonymously, access evidence-based resources, and help us break down barriers to mental health care for men.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center px-4">
             <Link
@@ -66,9 +71,12 @@ export default function Home() {
 
         {/* Statistics Section */}
         <div className="mt-12 sm:mt-16 max-w-5xl mx-auto px-4">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-8 sm:mb-12" style={{color: '#f0e6ff'}}>
-            Men's Mental Health: The Facts
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-4" style={{color: '#f0e6ff'}}>
+            Why This Matters: The Data
           </h2>
+          <p className="text-center mb-8 sm:mb-12" style={{color: '#c9b5e6'}}>
+            Men face unique barriers to mental health care. Here's what the evidence shows:
+          </p>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 mb-8">
             <div className="p-5 sm:p-6 rounded-lg shadow-md" style={{backgroundColor: '#2a1a3f', borderTop: '4px solid #824dbf'}}>

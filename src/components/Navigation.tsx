@@ -36,8 +36,8 @@ export default function Navigation() {
     <nav className="bg-gradient-to-r from-accent-purple via-tertiary-purple to-secondary-purple text-white shadow-lg" style={{background: 'linear-gradient(to right, #442574, #733ba0, #824dbf)'}}>
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row items-center justify-center md:justify-center py-3 md:py-0 md:h-16 gap-4 md:gap-0">
-          <Link href="/" className="text-lg sm:text-xl font-bold whitespace-nowrap md:absolute md:left-4">
-            Men&apos;s Mental Health
+          <Link href="/" className="text-xl sm:text-2xl font-bold whitespace-nowrap md:absolute md:left-4 flex items-center gap-2">
+            <span style={{color: '#f0e6ff'}}>🧠 MentalWell</span>
           </Link>
           
           {/* Desktop Navigation */}
