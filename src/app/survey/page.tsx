@@ -86,13 +86,13 @@ export default function SurveyPage() {
   };
 
   return (
-    <div className="min-h-screen py-6 sm:py-12" style={{background: 'linear-gradient(to bottom, #2a1a3f, #1a0f2e)'}}>
+    <div className="min-h-screen py-6 sm:py-12" style={{background: 'linear-gradient(to bottom, #1f2a44, #162033)'}}>
       <div className="container mx-auto px-4 max-w-3xl">
-        <div className="rounded-lg shadow-md p-5 sm:p-8" style={{backgroundColor: '#2a1a3f'}}>
-          <h1 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6" style={{color: '#f0e6ff'}}>
+        <div className="rounded-lg shadow-md p-5 sm:p-8" style={{backgroundColor: '#1f2a44'}}>
+          <h1 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6" style={{color: '#e7eef5'}}>
             Men&apos;s Mental Health Survey
           </h1>
-          <p className="mb-6 sm:mb-8 text-sm sm:text-base" style={{color: '#c9b5e6'}}>
+          <p className="mb-6 sm:mb-8 text-sm sm:text-base" style={{color: '#b8c5d6'}}>
             This anonymous survey helps us understand men&apos;s experiences with mental health therapy. 
             Your honest responses will contribute to reducing stigma and improving mental health resources.
           </p>
@@ -100,7 +100,7 @@ export default function SurveyPage() {
           <form onSubmit={handleSubmit} className="space-y-8">
             {/* Age Group */}
             <div>
-              <label className="block text-lg font-semibold mb-3" style={{color: '#f0e6ff'}}>
+              <label className="block text-lg font-semibold mb-3" style={{color: '#e7eef5'}}>
                 1. What is your age group? <span className="text-red-500">*</span>
               </label>
               <select
@@ -108,7 +108,7 @@ export default function SurveyPage() {
                 value={formData.age}
                 onChange={(e) => setFormData({ ...formData, age: e.target.value })}
                 className="w-full p-3 rounded-lg focus:ring-2 focus:border-transparent"
-                style={{borderColor: '#824dbf', backgroundColor: '#1a0f2e', color: '#f0e6ff'}}
+                style={{borderColor: '#2d8c8c', backgroundColor: '#162033', color: '#e7eef5'}}
               >
                 <option value="">Select an age group</option>
                 <option value="18-24">18-24</option>
@@ -121,7 +121,7 @@ export default function SurveyPage() {
             </div>
             {/* Therapy Attendance */}
             <div>
-              <label className="block text-lg font-semibold mb-3" style={{color: '#f0e6ff'}}>
+              <label className="block text-lg font-semibold mb-3" style={{color: '#e7eef5'}}>
                 2. Have you ever attended therapy or counseling? <span className="text-red-500">*</span>
               </label>
               <div className="space-y-2">
@@ -156,7 +156,7 @@ export default function SurveyPage() {
             {formData.hasAttendedTherapy === THERAPY_YES && (
               <>
                 <div>
-                  <label className="block text-lg font-semibold mb-3" style={{color: '#f0e6ff'}}>
+                  <label className="block text-lg font-semibold mb-3" style={{color: '#e7eef5'}}>
                     3. What were your main reasons for seeking therapy? (Select all that apply)
                   </label>
                   <div className="space-y-2">
@@ -167,7 +167,7 @@ export default function SurveyPage() {
                           checked={formData.reasonsForTherapy.includes(reason)}
                           onChange={() => handleCheckboxChange('reasonsForTherapy', reason)}
                           className="mr-2"
-                          style={{accentColor: '#824dbf'}}
+                          style={{accentColor: '#2d8c8c'}}
                         />
                         {reason}
                       </label>
@@ -176,7 +176,7 @@ export default function SurveyPage() {
                 </div>
 
                 <div>
-                  <label className="block text-lg font-semibold mb-3" style={{color: '#f0e6ff'}}>
+                  <label className="block text-lg font-semibold mb-3" style={{color: '#e7eef5'}}>
                     4. What therapy modalities did your therapist use? (Select all that apply, if known)
                   </label>
                   <div className="space-y-2">
@@ -187,7 +187,7 @@ export default function SurveyPage() {
                           checked={formData.therapistModalities.includes(modality)}
                           onChange={() => handleCheckboxChange('therapistModalities', modality)}
                           className="mr-2"
-                          style={{accentColor: '#824dbf'}}
+                          style={{accentColor: '#2d8c8c'}}
                         />
                         {modality}
                       </label>
@@ -196,11 +196,11 @@ export default function SurveyPage() {
                 </div>
 
                 <div>
-                  <label className="block text-lg font-semibold mb-3" style={{color: '#f0e6ff'}}>
+                  <label className="block text-lg font-semibold mb-3" style={{color: '#e7eef5'}}>
                     5. On a scale of 1-10, how likely would you be to recommend therapy to other men?
                   </label>
                   <div className="flex items-center gap-4">
-                    <span style={{color: '#c9b5e6'}}>1 (Not likely)</span>
+                    <span style={{color: '#b8c5d6'}}>1 (Not likely)</span>
                     <input
                       type="range"
                       min="1"
@@ -208,21 +208,21 @@ export default function SurveyPage() {
                       value={formData.willingnessToRecommend}
                       onChange={(e) => setFormData({ ...formData, willingnessToRecommend: parseInt(e.target.value) })}
                       className="flex-1"
-                      style={{accentColor: '#824dbf'}}
+                      style={{accentColor: '#2d8c8c'}}
                     />
-                    <span style={{color: '#c9b5e6'}}>10 (Very likely)</span>
-                    <span className="font-bold" style={{color: '#824dbf'}}>{formData.willingnessToRecommend}</span>
+                    <span style={{color: '#b8c5d6'}}>10 (Very likely)</span>
+                    <span className="font-bold" style={{color: '#2d8c8c'}}>{formData.willingnessToRecommend}</span>
                   </div>
                 </div>
                 <div>
-                  <label className="block text-lg font-semibold mb-3" style={{color: '#f0e6ff'}}>
+                  <label className="block text-lg font-semibold mb-3" style={{color: '#e7eef5'}}>
                     6. What aspect of therapy did you find most helpful?
                   </label>
                   <textarea
                     value={formData.mostHelpfulAspect}
                     onChange={(e) => setFormData({ ...formData, mostHelpfulAspect: e.target.value })}
                     className="w-full p-3 rounded-lg focus:ring-2 focus:border-transparent"
-                    style={{borderColor: '#824dbf', backgroundColor: '#1a0f2e', color: '#f0e6ff'}}
+                    style={{borderColor: '#2d8c8c', backgroundColor: '#162033', color: '#e7eef5'}}
                     rows={3}
                     placeholder="Share your experience..."
                   />
@@ -232,7 +232,7 @@ export default function SurveyPage() {
             {/* Conditional questions for those who haven't attended therapy */}
             {formData.hasAttendedTherapy === THERAPY_NO && (
               <div>
-                <label className="block text-lg font-semibold mb-3" style={{color: '#f0e6ff'}}>
+                <label className="block text-lg font-semibold mb-3" style={{color: '#e7eef5'}}>
                   3. What are your main reasons for not seeking therapy? (Select all that apply)
                 </label>
                 <div className="space-y-2">
@@ -243,7 +243,7 @@ export default function SurveyPage() {
                         checked={formData.reasonsAgainstTherapy.includes(reason)}
                         onChange={() => handleCheckboxChange('reasonsAgainstTherapy', reason)}
                         className="mr-2"
-                        style={{accentColor: '#824dbf'}}
+                        style={{accentColor: '#2d8c8c'}}
                       />
                       {reason}
                     </label>
@@ -253,11 +253,11 @@ export default function SurveyPage() {
             )}
             {/* Perceived Stigma */}
             <div>
-              <label className="block text-lg font-semibold mb-3" style={{color: '#f0e6ff'}}>
+              <label className="block text-lg font-semibold mb-3" style={{color: '#e7eef5'}}>
                 {formData.hasAttendedTherapy === THERAPY_YES ? '7' : '4'}. On a scale of 1-10, how much stigma do you feel exists around men seeking therapy? <span className="text-red-500">*</span>
               </label>
               <div className="flex items-center gap-4">
-                <span style={{color: '#c9b5e6'}}>1 (No stigma)</span>
+                <span style={{color: '#b8c5d6'}}>1 (No stigma)</span>
                 <input
                   type="range"
                   min="1"
@@ -265,15 +265,15 @@ export default function SurveyPage() {
                   value={formData.perceivedStigma}
                   onChange={(e) => setFormData({ ...formData, perceivedStigma: parseInt(e.target.value) })}
                   className="flex-1"
-                  style={{accentColor: '#824dbf'}}
+                  style={{accentColor: '#2d8c8c'}}
                 />
-                <span style={{color: '#c9b5e6'}}>10 (High stigma)</span>
-                <span className="font-bold" style={{color: '#824dbf'}}>{formData.perceivedStigma}</span>
+                <span style={{color: '#b8c5d6'}}>10 (High stigma)</span>
+                <span className="font-bold" style={{color: '#2d8c8c'}}>{formData.perceivedStigma}</span>
               </div>
             </div>
             {/* Barriers */}
             <div>
-              <label className="block text-lg font-semibold mb-3" style={{color: '#f0e6ff'}}>
+              <label className="block text-lg font-semibold mb-3" style={{color: '#e7eef5'}}>
                 {formData.hasAttendedTherapy === THERAPY_YES ? '8' : '5'}. What barriers prevent men from seeking mental health support? (Select all that apply)
               </label>
               <div className="space-y-2">
@@ -284,7 +284,7 @@ export default function SurveyPage() {
                       checked={formData.barriers.includes(barrier)}
                       onChange={() => handleCheckboxChange('barriers', barrier)}
                       className="mr-2"
-                      style={{accentColor: '#824dbf'}}
+                      style={{accentColor: '#2d8c8c'}}
                     />
                     {barrier}
                   </label>
@@ -293,14 +293,14 @@ export default function SurveyPage() {
             </div>
             {/* Preferred Format */}
             <div>
-              <label className="block text-lg font-semibold mb-3" style={{color: '#f0e6ff'}}>
+              <label className="block text-lg font-semibold mb-3" style={{color: '#e7eef5'}}>
                 {formData.hasAttendedTherapy === THERAPY_YES ? '9' : '6'}. What format of therapy would you prefer or find most accessible?
               </label>
               <select
                 value={formData.preferredFormat}
                 onChange={(e) => setFormData({ ...formData, preferredFormat: e.target.value })}
                 className="w-full p-3 rounded-lg focus:ring-2 focus:border-transparent"
-                style={{borderColor: '#824dbf', backgroundColor: '#1a0f2e', color: '#f0e6ff'}}
+                style={{borderColor: '#2d8c8c', backgroundColor: '#162033', color: '#e7eef5'}}
               >
                 <option value="">Select a format</option>
                 <option value="In-person">In-person</option>
@@ -313,21 +313,21 @@ export default function SurveyPage() {
             </div>
 
             {/* Shame Section */}
-            <div className="p-6 rounded-lg space-y-6" style={{backgroundColor: 'rgba(130, 77, 191, 0.1)', borderLeft: '4px solid #824dbf'}}>
-              <h2 className="text-xl font-bold mb-4" style={{color: '#f0e6ff'}}>
+            <div className="p-6 rounded-lg space-y-6" style={{backgroundColor: 'rgba(45, 140, 140, 0.12)', borderLeft: '4px solid #2d8c8c'}}>
+              <h2 className="text-xl font-bold mb-4" style={{color: '#e7eef5'}}>
                 Understanding Shame and Mental Health
               </h2>
-              <p className="mb-4" style={{color: '#c9b5e6'}}>
+              <p className="mb-4" style={{color: '#b8c5d6'}}>
                 The following questions explore the role of shame in men&apos;s mental health experiences.
               </p>
 
               {/* Shame Frequency */}
               <div>
-                <label className="block text-lg font-semibold mb-3" style={{color: '#f0e6ff'}}>
+                <label className="block text-lg font-semibold mb-3" style={{color: '#e7eef5'}}>
                   {formData.hasAttendedTherapy === THERAPY_YES ? '10' : '7'}. How frequently do you experience feelings of shame related to your mental health or emotional struggles?
                 </label>
                 <div className="flex items-center gap-4">
-                  <span style={{color: '#c9b5e6'}}>1 (Never)</span>
+                  <span style={{color: '#b8c5d6'}}>1 (Never)</span>
                   <input
                     type="range"
                     min="1"
@@ -335,20 +335,20 @@ export default function SurveyPage() {
                     value={formData.shameFrequency ?? 4}
                     onChange={(e) => setFormData({ ...formData, shameFrequency: parseInt(e.target.value) })}
                     className="flex-1"
-                    style={{accentColor: '#824dbf'}}
+                    style={{accentColor: '#2d8c8c'}}
                   />
-                  <span style={{color: '#c9b5e6'}}>7 (Very frequently)</span>
-                  <span className="font-bold" style={{color: '#824dbf'}}>{formData.shameFrequency ?? 4}</span>
+                  <span style={{color: '#b8c5d6'}}>7 (Very frequently)</span>
+                  <span className="font-bold" style={{color: '#2d8c8c'}}>{formData.shameFrequency ?? 4}</span>
                 </div>
               </div>
 
               {/* Shame Intensity */}
               <div>
-                <label className="block text-lg font-semibold mb-3" style={{color: '#f0e6ff'}}>
+                <label className="block text-lg font-semibold mb-3" style={{color: '#e7eef5'}}>
                   {formData.hasAttendedTherapy === THERAPY_YES ? '11' : '8'}. When you experience shame, how intense are those feelings?
                 </label>
                 <div className="flex items-center gap-4">
-                  <span style={{color: '#c9b5e6'}}>1 (Mild)</span>
+                  <span style={{color: '#b8c5d6'}}>1 (Mild)</span>
                   <input
                     type="range"
                     min="1"
@@ -356,16 +356,16 @@ export default function SurveyPage() {
                     value={formData.shameIntensity ?? 4}
                     onChange={(e) => setFormData({ ...formData, shameIntensity: parseInt(e.target.value) })}
                     className="flex-1"
-                    style={{accentColor: '#824dbf'}}
+                    style={{accentColor: '#2d8c8c'}}
                   />
-                  <span style={{color: '#c9b5e6'}}>7 (Very intense)</span>
-                  <span className="font-bold" style={{color: '#824dbf'}}>{formData.shameIntensity ?? 4}</span>
+                  <span style={{color: '#b8c5d6'}}>7 (Very intense)</span>
+                  <span className="font-bold" style={{color: '#2d8c8c'}}>{formData.shameIntensity ?? 4}</span>
                 </div>
               </div>
 
               {/* Shame Sources */}
               <div>
-                <label className="block text-lg font-semibold mb-3" style={{color: '#f0e6ff'}}>
+                <label className="block text-lg font-semibold mb-3" style={{color: '#e7eef5'}}>
                   {formData.hasAttendedTherapy === THERAPY_YES ? '12' : '9'}. What are the common sources of shame you experience? (Select all that apply)
                 </label>
                 <div className="space-y-2">
@@ -376,9 +376,9 @@ export default function SurveyPage() {
                         checked={formData.shameSources.includes(source)}
                         onChange={() => handleCheckboxChange('shameSources', source)}
                         className="mr-2"
-                        style={{accentColor: '#824dbf'}}
+                        style={{accentColor: '#2d8c8c'}}
                       />
-                      <span style={{color: '#c9b5e6'}}>{source}</span>
+                      <span style={{color: '#b8c5d6'}}>{source}</span>
                     </label>
                   ))}
                 </div>
@@ -386,7 +386,7 @@ export default function SurveyPage() {
 
               {/* Shame Emotions */}
               <div>
-                <label className="block text-lg font-semibold mb-3" style={{color: '#f0e6ff'}}>
+                <label className="block text-lg font-semibold mb-3" style={{color: '#e7eef5'}}>
                   {formData.hasAttendedTherapy === THERAPY_YES ? '13' : '10'}. Which emotions do you associate with your feelings of shame? (Select all that apply)
                 </label>
                 <div className="space-y-2">
@@ -397,9 +397,9 @@ export default function SurveyPage() {
                         checked={formData.shameEmotions.includes(emotion)}
                         onChange={() => handleCheckboxChange('shameEmotions', emotion)}
                         className="mr-2"
-                        style={{accentColor: '#824dbf'}}
+                        style={{accentColor: '#2d8c8c'}}
                       />
-                      <span style={{color: '#c9b5e6'}}>{emotion}</span>
+                      <span style={{color: '#b8c5d6'}}>{emotion}</span>
                     </label>
                   ))}
                 </div>
@@ -407,14 +407,14 @@ export default function SurveyPage() {
 
               {/* Shame Experience */}
               <div>
-                <label className="block text-lg font-semibold mb-3" style={{color: '#f0e6ff'}}>
+                <label className="block text-lg font-semibold mb-3" style={{color: '#e7eef5'}}>
                   {formData.hasAttendedTherapy === THERAPY_YES ? '14' : '11'}. Describe an experience when you felt ashamed and how it affected your willingness to seek help.
                 </label>
                 <textarea
                   value={formData.shameExperience}
                   onChange={(e) => setFormData({ ...formData, shameExperience: e.target.value })}
                   className="w-full p-3 rounded-lg focus:ring-2 focus:border-transparent"
-                  style={{borderColor: '#824dbf', backgroundColor: '#1a0f2e', color: '#f0e6ff'}}
+                  style={{borderColor: '#2d8c8c', backgroundColor: '#162033', color: '#e7eef5'}}
                   rows={4}
                   placeholder="Share your experience if you feel comfortable..."
                 />
@@ -423,14 +423,14 @@ export default function SurveyPage() {
 
             {/* Additional Comments */}
             <div>
-              <label className="block text-lg font-semibold mb-3" style={{color: '#f0e6ff'}}>
+              <label className="block text-lg font-semibold mb-3" style={{color: '#e7eef5'}}>
                 {formData.hasAttendedTherapy === THERAPY_YES ? '15' : '12'}. Any additional thoughts or experiences you'd like to share?
               </label>
               <textarea
                 value={formData.additionalComments}
                 onChange={(e) => setFormData({ ...formData, additionalComments: e.target.value })}
                 className="w-full p-3 rounded-lg focus:ring-2 focus:border-transparent"
-                style={{borderColor: '#824dbf', backgroundColor: '#1a0f2e', color: '#f0e6ff'}}
+                style={{borderColor: '#2d8c8c', backgroundColor: '#162033', color: '#e7eef5'}}
                 rows={4}
                 placeholder="Your thoughts are valuable to us..."
               />
@@ -445,7 +445,7 @@ export default function SurveyPage() {
               type="submit"
               disabled={submitting}
               className="w-full text-white py-3 px-6 rounded-lg text-lg font-semibold transition-colors disabled:cursor-not-allowed"
-              style={{backgroundColor: '#824dbf', opacity: submitting ? 0.6 : 1}}
+              style={{backgroundColor: '#2d8c8c', opacity: submitting ? 0.6 : 1}}
             >
               {submitting ? 'Submitting...' : 'Submit Survey'}
             </button>

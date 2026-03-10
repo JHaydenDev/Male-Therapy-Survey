@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
@@ -7,7 +8,7 @@ import { useState } from 'react';
 export default function Navigation() {
   const pathname = usePathname();
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
-  
+
   const primaryNav = [
     { href: '/', label: 'Home' },
     { href: '/survey', label: 'Survey' },
@@ -31,45 +32,34 @@ export default function Navigation() {
     { href: '/about', label: 'About' },
     { href: '/ethics', label: 'Ethics' },
   ];
-  
+
   return (
-    <nav className="bg-gradient-to-r from-accent-purple via-tertiary-purple to-secondary-purple text-white shadow-lg" style={{background: 'linear-gradient(to right, #442574, #733ba0, #824dbf)'}}>
+    <nav className="text-white shadow-lg" style={{ background: 'linear-gradient(to right, #1f2a44, #2d8c8c)' }}>
       <div className="container mx-auto px-4">
-        <div className="flex flex-col md:flex-row items-center justify-center md:justify-center py-3 md:py-0 md:h-16 gap-4 md:gap-0">
+        <div className="flex flex-col md:flex-row items-center justify-center py-3 md:py-0 md:h-16 gap-4 md:gap-0">
           <Link href="/" className="text-xl sm:text-2xl font-bold whitespace-nowrap md:absolute md:left-4 flex items-center gap-2">
-            <span style={{color: '#f0e6ff'}}>🧠 MentalWell</span>
+            <Image src="/mip-logo.svg" alt="Male Insight Project logo" width={28} height={28} priority />
+            <span style={{ color: '#e7eef5' }}>Male Insight Project</span>
           </Link>
-          
-          {/* Desktop Navigation */}
+
           <div className="hidden md:flex gap-6 items-center">
-            {/* Primary */}
             {primaryNav.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
                 className="text-sm font-medium hover:opacity-80 transition-opacity"
-                style={{
-                  borderBottom: pathname === item.href ? '2px solid white' : 'none',
-                  paddingBottom: '2px'
-                }}
+                style={{ borderBottom: pathname === item.href ? '2px solid white' : 'none', paddingBottom: '2px' }}
               >
                 {item.label}
               </Link>
             ))}
 
-            {/* Resources Dropdown */}
             <div className="relative group">
-              <button className="text-sm font-medium hover:opacity-80 transition-opacity flex items-center gap-1">
-                Resources ▼
-              </button>
+              <button className="text-sm font-medium hover:opacity-80 transition-opacity flex items-center gap-1">Resources ▼</button>
               <div className="absolute left-0 top-full pt-2 hidden group-hover:block">
-                <div className="bg-gray-900 rounded-lg shadow-lg py-2 min-w-max">
+                <div className="rounded-lg shadow-lg py-2 min-w-max" style={{ backgroundColor: '#162033' }}>
                   {resourceNav.map((item) => (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      className="block px-4 py-2 text-sm hover:bg-opacity-80 hover:bg-purple-700 transition-colors"
-                    >
+                    <Link key={item.href} href={item.href} className="block px-4 py-2 text-sm transition-colors" style={{ color: '#e7eef5' }}>
                       {item.label}
                     </Link>
                   ))}
@@ -77,30 +67,18 @@ export default function Navigation() {
               </div>
             </div>
 
-            {/* Support */}
             {supportNav.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="text-sm font-medium hover:opacity-80 transition-opacity"
-              >
+              <Link key={item.href} href={item.href} className="text-sm font-medium hover:opacity-80 transition-opacity">
                 {item.label}
               </Link>
             ))}
 
-            {/* Info */}
             <div className="relative group">
-              <button className="text-sm font-medium hover:opacity-80 transition-opacity flex items-center gap-1">
-                More ▼
-              </button>
+              <button className="text-sm font-medium hover:opacity-80 transition-opacity flex items-center gap-1">More ▼</button>
               <div className="absolute right-0 top-full pt-2 hidden group-hover:block">
-                <div className="bg-gray-900 rounded-lg shadow-lg py-2 min-w-max">
+                <div className="rounded-lg shadow-lg py-2 min-w-max" style={{ backgroundColor: '#162033' }}>
                   {infoNav.map((item) => (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      className="block px-4 py-2 text-sm hover:bg-opacity-80 hover:bg-purple-700 transition-colors"
-                    >
+                    <Link key={item.href} href={item.href} className="block px-4 py-2 text-sm transition-colors" style={{ color: '#e7eef5' }}>
                       {item.label}
                     </Link>
                   ))}
@@ -109,51 +87,16 @@ export default function Navigation() {
             </div>
           </div>
 
-          {/* Mobile Navigation */}
           <div className="md:hidden flex gap-2">
-            <Link
-              href="/survey"
-              className="px-3 py-2 rounded-md text-xs font-medium transition-colors"
-              style={{
-                backgroundColor: pathname === '/survey' ? 'rgba(255,255,255,0.2)' : 'rgba(255,255,255,0.1)',
-              }}
-            >
-              Survey
-            </Link>
-            <Link
-              href="/insights"
-              className="px-3 py-2 rounded-md text-xs font-medium transition-colors"
-              style={{
-                backgroundColor: pathname === '/insights' ? 'rgba(255,255,255,0.2)' : 'rgba(255,255,255,0.1)',
-              }}
-            >
-              Insights
-            </Link>
-            <Link
-              href="/resources"
-              className="px-3 py-2 rounded-md text-xs font-medium transition-colors"
-              style={{
-                backgroundColor: pathname === '/resources' ? 'rgba(255,255,255,0.2)' : 'rgba(255,255,255,0.1)',
-              }}
-            >
-              Help
-            </Link>
+            <Link href="/survey" className="px-3 py-2 rounded-md text-xs font-medium transition-colors" style={{ backgroundColor: pathname === '/survey' ? 'rgba(255,255,255,0.25)' : 'rgba(255,255,255,0.12)' }}>Survey</Link>
+            <Link href="/insights" className="px-3 py-2 rounded-md text-xs font-medium transition-colors" style={{ backgroundColor: pathname === '/insights' ? 'rgba(255,255,255,0.25)' : 'rgba(255,255,255,0.12)' }}>Insights</Link>
+            <Link href="/resources" className="px-3 py-2 rounded-md text-xs font-medium transition-colors" style={{ backgroundColor: pathname === '/resources' ? 'rgba(255,255,255,0.25)' : 'rgba(255,255,255,0.12)' }}>Help</Link>
             <div className="relative">
-              <button
-                onClick={() => setOpenDropdown(openDropdown === 'mobile' ? null : 'mobile')}
-                className="px-3 py-2 rounded-md text-xs font-medium hover:opacity-80 transition-opacity"
-              >
-                Menu
-              </button>
+              <button onClick={() => setOpenDropdown(openDropdown === 'mobile' ? null : 'mobile')} className="px-3 py-2 rounded-md text-xs font-medium hover:opacity-80 transition-opacity">Menu</button>
               {openDropdown === 'mobile' && (
-                <div className="absolute right-0 top-full mt-1 bg-gray-900 rounded-lg shadow-lg py-2 min-w-max z-10">
+                <div className="absolute right-0 top-full mt-1 rounded-lg shadow-lg py-2 min-w-max z-10" style={{ backgroundColor: '#162033' }}>
                   {[...resourceNav, ...supportNav, ...infoNav].map((item) => (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      className="block px-4 py-2 text-xs hover:bg-purple-700 transition-colors"
-                      onClick={() => setOpenDropdown(null)}
-                    >
+                    <Link key={item.href} href={item.href} className="block px-4 py-2 text-xs transition-colors" style={{ color: '#e7eef5' }} onClick={() => setOpenDropdown(null)}>
                       {item.label}
                     </Link>
                   ))}
