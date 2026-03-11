@@ -106,8 +106,8 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="p-5 sm:p-6 rounded-lg shadow-md" style={{backgroundColor: '#1f2a44', borderTop: '4px solid #1f2a44'}}>
-              <p className="text-3xl sm:text-4xl font-bold mb-2" style={{color: '#1f2a44'}}>
+            <div className="p-5 sm:p-6 rounded-lg shadow-md" style={{backgroundColor: '#1f2a44', borderTop: '4px solid #2d8c8c'}}>
+              <p className="text-3xl sm:text-4xl font-bold mb-2" style={{color: '#e7eef5'}}>
                 Gap
               </p>
               <p className="text-sm sm:text-base" style={{color: '#b8c5d6'}}>

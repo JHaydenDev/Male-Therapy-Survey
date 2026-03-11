@@ -3,11 +3,28 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export default function Navigation() {
   const pathname = usePathname();
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const navRef = useRef<HTMLElement>(null);
+
+  const toggleDropdown = (name: string) => {
+    setOpenDropdown(prev => (prev === name ? null : name));
+  };
+
+  const closeDropdown = () => setOpenDropdown(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (navRef.current && !navRef.current.contains(event.target as Node)) {
+        closeDropdown();
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const primaryNav = [
     { href: '/', label: 'Home' },
@@ -34,7 +51,7 @@ export default function Navigation() {
   ];
 
   return (
-    <nav className="text-white shadow-lg" style={{ background: 'linear-gradient(to right, #1f2a44, #2d8c8c)' }}>
+    <nav ref={navRef} className="text-white shadow-lg" style={{ background: 'linear-gradient(to right, #1f2a44, #2d8c8c)' }}>
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row items-center justify-center py-3 md:py-0 md:h-16 gap-4 md:gap-0">
           <Link href="/" className="text-xl sm:text-2xl font-bold whitespace-nowrap md:absolute md:left-4 flex items-center gap-2">
@@ -54,17 +71,33 @@ export default function Navigation() {
               </Link>
             ))}
 
-            <div className="relative group">
-              <button className="text-sm font-medium hover:opacity-80 transition-opacity flex items-center gap-1">Resources ▼</button>
-              <div className="absolute left-0 top-full pt-2 hidden group-hover:block">
-                <div className="rounded-lg shadow-lg py-2 min-w-max" style={{ backgroundColor: '#162033' }}>
-                  {resourceNav.map((item) => (
-                    <Link key={item.href} href={item.href} className="block px-4 py-2 text-sm transition-colors" style={{ color: '#e7eef5' }}>
-                      {item.label}
-                    </Link>
-                  ))}
+            <div className="relative">
+              <button
+                id="resources-btn"
+                className="text-sm font-medium hover:opacity-80 transition-opacity flex items-center gap-1"
+                aria-haspopup="true"
+                aria-expanded={openDropdown === 'resources'}
+                aria-controls="resources-menu"
+                onClick={() => toggleDropdown('resources')}
+                onKeyDown={(e) => { if (e.key === 'Escape') closeDropdown(); }}
+              >Resources ▼</button>
+              {openDropdown === 'resources' && (
+                <div
+                  id="resources-menu"
+                  role="menu"
+                  aria-labelledby="resources-btn"
+                  className="absolute left-0 top-full pt-2 z-10"
+                  onKeyDown={(e) => { if (e.key === 'Escape') closeDropdown(); }}
+                >
+                  <div className="rounded-lg shadow-lg py-2 min-w-max" style={{ backgroundColor: '#162033' }}>
+                    {resourceNav.map((item) => (
+                      <Link key={item.href} href={item.href} role="menuitem" className="block px-4 py-2 text-sm transition-colors" style={{ color: '#e7eef5' }} onClick={closeDropdown}>
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
 
             {supportNav.map((item) => (
@@ -73,17 +106,33 @@ export default function Navigation() {
               </Link>
             ))}
 
-            <div className="relative group">
-              <button className="text-sm font-medium hover:opacity-80 transition-opacity flex items-center gap-1">More ▼</button>
-              <div className="absolute right-0 top-full pt-2 hidden group-hover:block">
-                <div className="rounded-lg shadow-lg py-2 min-w-max" style={{ backgroundColor: '#162033' }}>
-                  {infoNav.map((item) => (
-                    <Link key={item.href} href={item.href} className="block px-4 py-2 text-sm transition-colors" style={{ color: '#e7eef5' }}>
-                      {item.label}
-                    </Link>
-                  ))}
+            <div className="relative">
+              <button
+                id="more-btn"
+                className="text-sm font-medium hover:opacity-80 transition-opacity flex items-center gap-1"
+                aria-haspopup="true"
+                aria-expanded={openDropdown === 'more'}
+                aria-controls="more-menu"
+                onClick={() => toggleDropdown('more')}
+                onKeyDown={(e) => { if (e.key === 'Escape') closeDropdown(); }}
+              >More ▼</button>
+              {openDropdown === 'more' && (
+                <div
+                  id="more-menu"
+                  role="menu"
+                  aria-labelledby="more-btn"
+                  className="absolute right-0 top-full pt-2 z-10"
+                  onKeyDown={(e) => { if (e.key === 'Escape') closeDropdown(); }}
+                >
+                  <div className="rounded-lg shadow-lg py-2 min-w-max" style={{ backgroundColor: '#162033' }}>
+                    {infoNav.map((item) => (
+                      <Link key={item.href} href={item.href} role="menuitem" className="block px-4 py-2 text-sm transition-colors" style={{ color: '#e7eef5' }} onClick={closeDropdown}>
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
 
