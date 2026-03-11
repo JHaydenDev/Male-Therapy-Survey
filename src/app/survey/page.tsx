@@ -24,8 +24,8 @@ export default function SurveyPage() {
     preferredFormat: '',
     additionalComments: '',
     // Shame-related fields
-    shameFrequency: undefined as number | undefined,
-    shameIntensity: undefined as number | undefined,
+    shameFrequency: 4,
+    shameIntensity: 4,
     shameSources: [] as string[],
     shameEmotions: [] as string[],
     shameExperience: '',
@@ -64,8 +64,8 @@ export default function SurveyPage() {
           preferredFormat: formData.preferredFormat || undefined,
           additionalComments: formData.additionalComments || undefined,
           // Shame-related fields
-          shameFrequency: formData.shameFrequency !== undefined ? formData.shameFrequency : undefined,
-          shameIntensity: formData.shameIntensity !== undefined ? formData.shameIntensity : undefined,
+          shameFrequency: formData.shameFrequency,
+          shameIntensity: formData.shameIntensity,
           shameSources: formData.shameSources.length > 0 ? formData.shameSources : undefined,
           shameEmotions: formData.shameEmotions.length > 0 ? formData.shameEmotions : undefined,
           shameExperience: formData.shameExperience || undefined,
@@ -332,13 +332,13 @@ export default function SurveyPage() {
                     type="range"
                     min="1"
                     max="7"
-                    value={formData.shameFrequency ?? 4}
+                    value={formData.shameFrequency}
                     onChange={(e) => setFormData({ ...formData, shameFrequency: parseInt(e.target.value) })}
                     className="flex-1"
                     style={{accentColor: '#2d8c8c'}}
                   />
                   <span style={{color: '#b8c5d6'}}>7 (Very frequently)</span>
-                  <span className="font-bold" style={{color: '#2d8c8c'}}>{formData.shameFrequency ?? 4}</span>
+                  <span className="font-bold" style={{color: '#2d8c8c'}}>{formData.shameFrequency}</span>
                 </div>
               </div>
 
@@ -353,13 +353,13 @@ export default function SurveyPage() {
                     type="range"
                     min="1"
                     max="7"
-                    value={formData.shameIntensity ?? 4}
+                    value={formData.shameIntensity}
                     onChange={(e) => setFormData({ ...formData, shameIntensity: parseInt(e.target.value) })}
                     className="flex-1"
                     style={{accentColor: '#2d8c8c'}}
                   />
                   <span style={{color: '#b8c5d6'}}>7 (Very intense)</span>
-                  <span className="font-bold" style={{color: '#2d8c8c'}}>{formData.shameIntensity ?? 4}</span>
+                  <span className="font-bold" style={{color: '#2d8c8c'}}>{formData.shameIntensity}</span>
                 </div>
               </div>
 
