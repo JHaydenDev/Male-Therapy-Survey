@@ -4,13 +4,21 @@ import { SurveyAnalytics } from '@/types/survey';
 
 export const dynamic = 'force-dynamic';
 
+const roundToTwo = (value: number) => Math.round(value * 100) / 100;
+
+function sortCountEntries(counts: Record<string, number>) {
+  return Object.entries(counts)
+    .map(([label, count]) => ({ label, count }))
+    .sort((a, b) => b.count - a.count);
+}
+
 export async function GET() {
   try {
     const responses = await getAllSurveyResponses();
-    
+
     if (responses.length === 0) {
-      return NextResponse.json({ 
-        success: true, 
+      return NextResponse.json({
+        success: true,
         data: {
           totalResponses: 0,
           therapyAttendanceRate: 0,
@@ -25,138 +33,118 @@ export async function GET() {
           averageShameIntensity: 0,
           topShameSources: [],
           topShameEmotions: [],
-        } 
+        },
       });
     }
-    
-    // Calculate analytics
+
+    const ageDistribution: Record<string, number> = {};
+    const reasonsCount: Record<string, number> = {};
+    const modalitiesCount: Record<string, number> = {};
+    const barriersCount: Record<string, number> = {};
+    const formatsCount: Record<string, number> = {};
+    const shameSourcesCount: Record<string, number> = {};
+    const shameEmotionsCount: Record<string, number> = {};
+
+    let attendedTherapy = 0;
+    let totalStigma = 0;
+    let totalWillingness = 0;
+    let willingnessCount = 0;
+    let totalShameFrequency = 0;
+    let shameFrequencyCount = 0;
+    let totalShameIntensity = 0;
+    let shameIntensityCount = 0;
+
+    for (const response of responses) {
+      totalStigma += response.perceivedStigma;
+      ageDistribution[response.age] = (ageDistribution[response.age] || 0) + 1;
+
+      if (response.hasAttendedTherapy) {
+        attendedTherapy += 1;
+      }
+
+      if (response.willingnessToRecommend !== undefined) {
+        totalWillingness += response.willingnessToRecommend;
+        willingnessCount += 1;
+      }
+
+      if (response.shameFrequency !== undefined) {
+        totalShameFrequency += response.shameFrequency;
+        shameFrequencyCount += 1;
+      }
+
+      if (response.shameIntensity !== undefined) {
+        totalShameIntensity += response.shameIntensity;
+        shameIntensityCount += 1;
+      }
+
+      response.reasonsForTherapy?.forEach((reason) => {
+        reasonsCount[reason] = (reasonsCount[reason] || 0) + 1;
+      });
+
+      response.therapistModalities?.forEach((modality) => {
+        modalitiesCount[modality] = (modalitiesCount[modality] || 0) + 1;
+      });
+
+      response.barriers?.forEach((barrier) => {
+        barriersCount[barrier] = (barriersCount[barrier] || 0) + 1;
+      });
+
+      if (response.preferredFormat) {
+        formatsCount[response.preferredFormat] = (formatsCount[response.preferredFormat] || 0) + 1;
+      }
+
+      response.shameSources?.forEach((source) => {
+        shameSourcesCount[source] = (shameSourcesCount[source] || 0) + 1;
+      });
+
+      response.shameEmotions?.forEach((emotion) => {
+        shameEmotionsCount[emotion] = (shameEmotionsCount[emotion] || 0) + 1;
+      });
+    }
+
     const totalResponses = responses.length;
-    const attendedTherapy = responses.filter(r => r.hasAttendedTherapy).length;
     const therapyAttendanceRate = (attendedTherapy / totalResponses) * 100;
-    
-    const totalStigma = responses.reduce((sum, r) => sum + r.perceivedStigma, 0);
     const averageStigmaScore = totalStigma / totalResponses;
-    
-    const responsesWithWillingness = responses.filter(r => r.willingnessToRecommend !== undefined);
-    const totalWillingness = responsesWithWillingness.reduce((sum, r) => sum + (r.willingnessToRecommend || 0), 0);
-    const averageWillingnessToRecommend = responsesWithWillingness.length > 0 
-      ? totalWillingness / responsesWithWillingness.length 
-      : 0;
-    
-    // Age distribution
-    const ageDistribution: { [key: string]: number } = {};
-    responses.forEach(r => {
-      ageDistribution[r.age] = (ageDistribution[r.age] || 0) + 1;
-    });
-    
-    // Top reasons for therapy
-    const reasonsCount: { [key: string]: number } = {};
-    responses.forEach(r => {
-      if (r.reasonsForTherapy) {
-        r.reasonsForTherapy.forEach(reason => {
-          reasonsCount[reason] = (reasonsCount[reason] || 0) + 1;
-        });
-      }
-    });
-    const topReasonsForTherapy = Object.entries(reasonsCount)
-      .map(([reason, count]) => ({ reason, count }))
-      .sort((a, b) => b.count - a.count)
+    const averageWillingnessToRecommend = willingnessCount > 0 ? totalWillingness / willingnessCount : 0;
+    const averageShameFrequency = shameFrequencyCount > 0 ? totalShameFrequency / shameFrequencyCount : 0;
+    const averageShameIntensity = shameIntensityCount > 0 ? totalShameIntensity / shameIntensityCount : 0;
+
+    const topReasonsForTherapy = sortCountEntries(reasonsCount)
+      .map(({ label, count }) => ({ reason: label, count }))
       .slice(0, 5);
-    
-    // Therapy modalities
-    const modalitiesCount: { [key: string]: number } = {};
-    responses.forEach(r => {
-      if (r.therapistModalities) {
-        r.therapistModalities.forEach(modality => {
-          modalitiesCount[modality] = (modalitiesCount[modality] || 0) + 1;
-        });
-      }
-    });
-    const therapyModalities = Object.entries(modalitiesCount)
-      .map(([modality, count]) => ({ modality, count }))
-      .sort((a, b) => b.count - a.count);
-    
-    // Top barriers
-    const barriersCount: { [key: string]: number } = {};
-    responses.forEach(r => {
-      if (r.barriers) {
-        r.barriers.forEach(barrier => {
-          barriersCount[barrier] = (barriersCount[barrier] || 0) + 1;
-        });
-      }
-    });
-    const topBarriers = Object.entries(barriersCount)
-      .map(([barrier, count]) => ({ barrier, count }))
-      .sort((a, b) => b.count - a.count)
+
+    const therapyModalities = sortCountEntries(modalitiesCount)
+      .map(({ label, count }) => ({ modality: label, count }));
+
+    const topBarriers = sortCountEntries(barriersCount)
+      .map(({ label, count }) => ({ barrier: label, count }))
       .slice(0, 5);
-    
-    // Preferred formats
-    const formatsCount: { [key: string]: number } = {};
-    responses.forEach(r => {
-      if (r.preferredFormat) {
-        formatsCount[r.preferredFormat] = (formatsCount[r.preferredFormat] || 0) + 1;
-      }
-    });
-    const preferredFormats = Object.entries(formatsCount)
-      .map(([format, count]) => ({ format, count }))
-      .sort((a, b) => b.count - a.count);
-    
-    // Shame frequency average
-    const responsesWithShameFrequency = responses.filter(r => r.shameFrequency !== undefined);
-    const totalShameFrequency = responsesWithShameFrequency.reduce((sum, r) => sum + r.shameFrequency!, 0);
-    const averageShameFrequency = responsesWithShameFrequency.length > 0 
-      ? totalShameFrequency / responsesWithShameFrequency.length 
-      : 0;
-    
-    // Shame intensity average
-    const responsesWithShameIntensity = responses.filter(r => r.shameIntensity !== undefined);
-    const totalShameIntensity = responsesWithShameIntensity.reduce((sum, r) => sum + r.shameIntensity!, 0);
-    const averageShameIntensity = responsesWithShameIntensity.length > 0 
-      ? totalShameIntensity / responsesWithShameIntensity.length 
-      : 0;
-    
-    // Top shame sources
-    const shameSourcesCount: { [key: string]: number } = {};
-    responses.forEach(r => {
-      if (r.shameSources) {
-        r.shameSources.forEach(source => {
-          shameSourcesCount[source] = (shameSourcesCount[source] || 0) + 1;
-        });
-      }
-    });
-    const topShameSources = Object.entries(shameSourcesCount)
-      .map(([source, count]) => ({ source, count }))
-      .sort((a, b) => b.count - a.count);
-    
-    // Top shame emotions
-    const shameEmotionsCount: { [key: string]: number } = {};
-    responses.forEach(r => {
-      if (r.shameEmotions) {
-        r.shameEmotions.forEach(emotion => {
-          shameEmotionsCount[emotion] = (shameEmotionsCount[emotion] || 0) + 1;
-        });
-      }
-    });
-    const topShameEmotions = Object.entries(shameEmotionsCount)
-      .map(([emotion, count]) => ({ emotion, count }))
-      .sort((a, b) => b.count - a.count);
-    
+
+    const preferredFormats = sortCountEntries(formatsCount)
+      .map(({ label, count }) => ({ format: label, count }));
+
+    const topShameSources = sortCountEntries(shameSourcesCount)
+      .map(({ label, count }) => ({ source: label, count }));
+
+    const topShameEmotions = sortCountEntries(shameEmotionsCount)
+      .map(({ label, count }) => ({ emotion: label, count }));
+
     const analytics: SurveyAnalytics = {
       totalResponses,
-      therapyAttendanceRate: Math.round(therapyAttendanceRate * 100) / 100,
-      averageStigmaScore: Math.round(averageStigmaScore * 100) / 100,
-      averageWillingnessToRecommend: Math.round(averageWillingnessToRecommend * 100) / 100,
+      therapyAttendanceRate: roundToTwo(therapyAttendanceRate),
+      averageStigmaScore: roundToTwo(averageStigmaScore),
+      averageWillingnessToRecommend: roundToTwo(averageWillingnessToRecommend),
       ageDistribution,
       topReasonsForTherapy,
       therapyModalities,
       topBarriers,
       preferredFormats,
-      averageShameFrequency: Math.round(averageShameFrequency * 100) / 100,
-      averageShameIntensity: Math.round(averageShameIntensity * 100) / 100,
+      averageShameFrequency: roundToTwo(averageShameFrequency),
+      averageShameIntensity: roundToTwo(averageShameIntensity),
       topShameSources,
       topShameEmotions,
     };
-    
+
     return NextResponse.json({ success: true, data: analytics });
   } catch (error) {
     console.error('Error fetching analytics:', error);
