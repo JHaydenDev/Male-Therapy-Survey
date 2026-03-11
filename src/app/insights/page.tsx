@@ -249,7 +249,7 @@ export default function InsightsPage() {
                   <XAxis dataKey="name" stroke="#b8c5d6" />
                   <YAxis stroke="#b8c5d6" />
                   <Tooltip contentStyle={{backgroundColor: 'rgba(22, 32, 51, 0.95)', border: '1px solid rgba(45, 140, 140, 0.5)', color: '#e7eef5', borderRadius: '8px', padding: '10px 14px', boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)'}} cursor={{fill: 'rgba(45, 140, 140, 0.15)'}} wrapperStyle={{color: '#e7eef5'}} />
-                  <Bar dataKey="value" fill="#1f2a44" />
+                  <Bar dataKey="value" fill="#2d8c8c" />
                 </BarChart>
               </ResponsiveContainer>
             </div>
